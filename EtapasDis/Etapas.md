@@ -1,8 +1,5 @@
-# 🧱 Etapas de diseño y prototipado
-En esta sección se presentan las etapas de diseño y de prototipado para implementar en un proyecto.
-
-## 📊 Etapas de diseño
-Es evidente que en esta sección se debe hablar de metodologías. En un caso cualquiera, lo ideal es seguir una metodología estilo Ulrich que contempla los siguientes puntos:
+# 🧱 Etapas de diseño de firmware
+En esta sección se presentan las etapas de diseño, a partir del uso aplicado de la metodología Ulrich al desarrollo de firmware.
 
 * ***Obtención de requisitos:*** cómo su nombre lo indica, aquí se obtienen los requerimientos iniciales del proyecto, contestando preguntas básicas: ¿qué debe hacer? y ¿cómo debe actuar el sistema?
 
