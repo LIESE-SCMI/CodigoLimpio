@@ -2,15 +2,15 @@
 Es más fácil utilizar funciones abstractas que escribir acceso a registros.
 
 ## 💾 Diseño por contrato
-Para este caso específico, crear una o varías HAL va a depender de las necesidades generales que se necesiten. A continuación se muestra un ejemplo de cómo plantear una función bajo la metodología *diseño por contrato*, la cual se explicación se tiene a continuación.
+Para este caso específico, crear una o varías HAL va a depender de las necesidades generales del proyecto. A continuación se muestra un ejemplo de cómo plantear una función bajo la metodología *diseño por contrato*, la cual se explica a continuación.
 
 🌐 [Diseño por contrato](https://www.revista.unam.mx/vol.4/num5/art11/art11.htm)
 
 ### 🧩 Objetivo
-El *diseño por contrato* busca evitar la validación de parámetros en tiempo de ejecución, a través de mencionar a través de comentarios todo el contexto de una función (su pasado, su futuro, los parámetros y necesidades para ser utilizada, entre otros).
+El **diseño por contrato** se centra en evitar la validación de los parámetros que recibe una función durante la ejecución del programa, debido a que consume tiempo valioso que la CPU puede ocupar para aquellas instrucciones que si son prioritarias. De este modo, el diseño por contrato hará uso de documentación o comentarios, para exponer al usuario todo el contexto relevante de la función, como sus parámetros de entrada, el valor de retorno, las pre-condiciones que se deben cumplir para que la función realice un correcto trabajo y las post-condiciones que el usuario debe esperar (después de la ejecución de la función), además de la inclusión de ejemplos de uso e invariantes (condiciones que se deben cumplir dentro de la función con el fin de esperar una correcta operación).
 
 ### ⚠️ Puntos importantes
-Retomando la información importante, el método se va a ajustar de la siguiente manera:
+Retomando la información anteriormente mencionada, el método se va a ajustar de la siguiente manera:
 
 * **Tipos de rutina.** Define que tipo de función va a utilizar un usuario (el mismo debe entenderlo o saber acerca de la metodología a usar, sino no representa nada para él).
     * **Comandos.** Cambian y/o modifican el estado interno de un objeto(en nuestro caso, algún periférico, componente electrónico, etc). 
@@ -80,14 +80,14 @@ Por otra parte, el usuario debe tener una explicación general de la función, a
 
 Con esto se tiene un contexto completo de la función, bajo el cual un usuario puede utilizar una función y sabe de las consecuencias que puede tener si coloca información incorrecta o le da un uso incorrecto.
 
-Por último, es importante resaltar que este comentario aplica para todas las capas de Firmware y software a utilizar en sistemas embebidos.
+Por último, es importante resaltar que este comentario aplica para todas las capas de firmware y software a utilizar en sistemas embebidos.
 
 ### 🧩 Planteamiento de una función HAL
 En este caso, depende de la aplicación que se le quiere dar.
 
 * ¿Quieres qué la función configure varios perifericos o solo uno?
 * ¿Quieres abstraer todo el acceso a los registros o quieres que pueda acceder a ellos?
-* ¿Con una función se configuran todos los modos de operación o se hace una función para cada modo?
+* ¿Con una sola función se configuran todos los modos de operación o se hace una función para cada modo?
 
 En este caso, al ser una misión de alto desempeño, se hará lo siguiente:
 
@@ -131,11 +131,11 @@ USART_Config(USART_Reg *USART1_Reg, USART_RegConfig USART1_Config)
 {
     // Dentro de esta función solo se pueden utilizar las dos estructuras que se han pasado como parámetros
 
-    Reg32_Set(USART1_Reg->CCR, USART1_Config.Clock); //Esta bien
-    Reg32_SetOR(USART1_Reg->CR1, USART1_Config.BaudRate); //Esta bien
+    Reg32_Set(&USART1_Reg->CCR, USART1_Config.Clock); //Esta bien
+    Reg32_SetOR(U&SART1_Reg->CR1, USART1_Config.BaudRate); //Esta bien
 
     //Estó esta mal. A pesar de que una estructura global se puede llamar sin pasarse como parámetro, estó puede confundir a alguien poco experto e incluso corromper el código cuando se habla de un RTOS o una ISR que comparten ese registro o variable.
-    Reg32_Set(GPIO_Reg->IR, 0x01); 
+    Reg32_Set(&GPIO_Reg->IR, 0x01); 
 
 }
 ```
@@ -181,7 +181,7 @@ typedef enum
 typedef enum
 {
     USART1_9600bps = 9600;
-}USART_Enum_Clock;
+}USART_Enum_BaudRate;
 ```
 
 ⚠️ ***¡OJO!*** Las enumeraciones ayudan a eliminar los números mágicos(valores explícitos en hexa, bin, octal o decimal).
@@ -201,7 +201,7 @@ typedef enum
 typedef enum
 {
     USART1_9600bps = 9600;
-}USART_Enum_Clock;
+}USART_Enum_BaudRate;
 
 typedef enum
 {
@@ -229,7 +229,7 @@ USART_RegConfig USART1_Config = { USART1_Clk, USART1_AsynConfig, USART1_9600bps}
 * 
 * # >> Archivo donde se encuentra: USART.h y USART.c
 * 
-* # >> Creador: Ares Isai J.Gs
+* # >> Creador: Ares Isai J.G.
 *
 * # >> Decripción: Esta función se encarga de configurar el periférico 
 * USART1, a 9600 bps, con un bit de stop, 9 bits de dato, un bit de 
@@ -285,9 +285,9 @@ USART_RegConfig USART1_Config = { USART1_Clk, USART1_AsynConfig, USART1_9600bps}
 *********************************************************************/
 USART_Config(USART_Reg *USART1_Reg, USART_RegConfig USART1_Config)
 {
-    Reg32_SetOR(USART1_Reg->CCR, USART1_Config.Clock);
-    Reg32_SetBitOR(USART1_Reg->CR1, 16, USART1_Config.BaudRate);
-    Reg32_SetOR(USART1_Reg->CR1, USART1_Config.AsyncConfig);
+    Reg32_SetOR(&USART1_Reg->CCR, USART1_Config.Clock);
+    Reg32_SetBitOR(&USART1_Reg->CR1, 16, USART1_Config.BaudRate);
+    Reg32_SetOR(&USART1_Reg->CR1, USART1_Config.AsyncConfig);
 }
 ```
 
