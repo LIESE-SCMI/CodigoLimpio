@@ -164,11 +164,11 @@ typedef enum
 typedef enum
 {
     ASYNC_CONFIG  = 0x20AC
-}USART_Clock_t;
+}USART_Config_t;
 
 void USART_Config(USART_RegFixedPtr_t USART_Reg)
 {
-    Reg32_SetBit(USART_Reg->CCR, MASK_0, CLOCK_USART1);
-    Reg32_SetOR(USART_Reg->CR1, ASYNC_CONFIG);
+    Reg32_SetBit(&USART_Reg->CCR, MASK_0, CLOCK_USART1);
+    Reg32_SetOR(&USART_Reg->CR1, ASYNC_CONFIG);
 }
 ```
