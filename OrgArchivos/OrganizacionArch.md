@@ -1,5 +1,5 @@
 # 🗂️ Organización archivos
-En esta sección se presenta una organización de archivos explicada a través de las capas de firmware y software embebidos. Se recomienda leer primero ese capítulo y luego esté.
+A partir de las capas de firmware se puede abordar la organización de los archivos, en donde se pueden ordenar varios archivos por capas, así como utilizar conceptos de POO (herencia y atributos de objetos), los cuales le dan otro significado a los archivos, más allá de contener funciones. De este modo, un archivo se puede visualizar como una clase, a partir de la cual solo la inclusión de esta en otro archivo le permite heredar los atributos y métodos de la misma (variables y punteros globales, enumeraciones, estructuras y funciones), además de servir como indicativo de que solo ese archivo heredado puede ser ocupado en el nuevo archivo. Esto permite que la división de capas se haga con más facilidad.
 
 ## 🗂️ ¿Cómo organizar los archivos?
 Para explicar estó, vamos a suponer que tenemos los siguientes archivos:
@@ -20,7 +20,7 @@ A partir de aquí, la capa de board support debe seguir una línealidad cómo se
 
 ![Diagrama de organización de archivos (Board Support)](./Imagenes/OrganizacionArchivos_BS.png)
 
-No haría sentido tener archivos de periféricos I2C, CAN o ethernet para el manejo de un Módulo bluetooth HC-05, por dar un ejemplo. Si no se ocupa, no se debe agregar, ya que podría ocasionar errores si se llegarán a utilizar funciones que no se necesitan.
+No haría sentido tener archivos de periféricos I2C, CAN o ethernet para el manejo de un Módulo bluetooth HC-05, por dar un ejemplo. Si no se ocupa, no se debe agregar, ya que podría ocasionar errores si se llegarán a utilizar funciones que no se necesitan. Esto va de la mano con el concepto de herencia, en donde cada archivo, ahora visto como un objeto, hereda atributos al ser incluido en otro archivo. La inclusión de este concepto permite a otros integrantes diferenciar cada capa y utilizar solo los archivos necesarios. 
 
 Continuando con el ejemplo, a partir de la capa de board support realmente se podrán observar que las capas pueden llegar a revolverse un poco, debido a la prescencia de los archivos de un RTOS y otros tantos que se lleguen a necesitar. Al final se podría ver algo como:
 
