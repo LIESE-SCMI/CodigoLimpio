@@ -1,10 +1,10 @@
 # Capa de "board support"
-En esta sección se muestra el planteamiento de una función para Board Support.
+En esta sección se muestra el planteamiento de una función para la capa de Board Support.
 
 ## 💾 Creación de una función para board support
-Retomando la definición, la capa de board support contiene todo el firmware relacionado con la configuración y comunicación entre el uC y los sensores y actuadores. 
+Retomando la definición, la capa de board support contiene todo el firmware relacionado con la configuración y comunicación entre el uC, los sensores y actuadores. 
 
-Se debe mencionar que esta capa continúa implementado el uso del *diseño por contrato*, visto en la anterior capa de HAL. Asimismo, retoma algunas ideas propuestas en esa misma capa.
+Se debe mencionar que esta capa implementa el uso del *diseño por contrato*, visto en la capa HAL. Asimismo, retoma algunas ideas propuestas en esa misma capa.
 
 ### 📄 Comentario
 El comentario no cambia mucho:
@@ -95,7 +95,16 @@ typedef struct
     SerialFlashArrayData_Byte TransmitData[17];
 }SerialFlash_Data;
 
-SerialFlash_Data Flash_Data = {ReceiveData, TransmitData, "\0", "Hola, Arduinardo\n"};
+SerialFlash_Data Flash_Data = {ReceiveData, TransmitData, {0}, {0}};
+
+/**
+Comentario
+*/
+SerialFlash_SPI_Write(SerialFlash_Data * Data)
+{
+    SPI5_DMA1_SendData(SPI5_Reg, DMA1_Reg, &Data->ptrTransmitData);
+    Data->ptrTransmitData = &Data->TransmitData[0];
+}
 ```
 
 ⚠️ ***¡OJO!*** Esto también puede aplicar para la capa de HAL, sin embargo, dependerá de la arquitectura final que se desee implementar, en específico de las capas seleccionadas.
