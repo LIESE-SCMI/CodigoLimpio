@@ -23,6 +23,12 @@ De este modo, retomando las condiciones:
 Cómo ejemplo podemos tomar el siguiente código:
 
 ```c
+static inline void GPIO_ClearFlagHardware();
+static inline void GPIO_GiveFlagISR();
+static void GPIO_TakeFlagISR();
+static void GPIO_FlipLED();
+static void GPIO_ClearFlagISR();
+
 void ISR_GPIOA()
 {
     GPIO_ClearFlagHardware(); //Limpia la bandera de interrupción, generada por hardware
@@ -39,7 +45,7 @@ int main()
         if( !GPIO_TakeFlagISR() ) //Validar si la bandera de monitoreo ha cambiado por la ISR
         {
             GPIO_FlipLED();     //parpadear LED
-            GPIO_ClearFlagISR();    //Limpiar la bandera de monitoreo
+            GPIO_ClearFlagISR();    //Limpiar la bandera de monitoreo para una nueva interrupción
         }
      }
 }
