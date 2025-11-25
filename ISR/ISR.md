@@ -23,7 +23,7 @@ De este modo, retomando las condiciones:
 Cómo ejemplo podemos tomar el siguiente código:
 
 ```c
-ISR_GPIOA()
+void ISR_GPIOA()
 {
     GPIO_ClearFlagHardware(); //Limpia la bandera de interrupción, generada por hardware
     GPIO_GiveFlagISR(); //Función que indica al main que se puede ejecutar una instrucción relacionada a la bandera de GPIOA, en este caso es otra bandera.
