@@ -12,3 +12,9 @@ A continuación se muestra el temario general de todo lo que se debe considerar 
 
 ## 🧩 Ejemplo de uso de bit field
 - 🧱 [Ejemplo de driver con bit field [EK-TM4C1294XL]](./Ejemplo_DriversBitField/Explicacion.md)
+
+## 🧩 Ejemplo de uso de FreeRTOS
+- 🧱 [Ejemplo de FreeRTOS [Núcleo F439ZI]](./Ejemplo_FreeRTOS/README.md)
+
+## 🧩 Ejemplo de uso de DMA
+- 🧱 [Ejemplo de uso de DMA [Núcleo F439ZI]](./Ejemplo_DMA/README.md)
