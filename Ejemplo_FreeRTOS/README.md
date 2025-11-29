@@ -1,0 +1,19 @@
+# Explicación
+Un Real-Time Operating System (RTOS) es un sistema operativo orientado a administrar las tareas críticas de un sistema embebido, asegurando respuestas antes de que se cumpla un tiempo límite definido o deadline (tiempo real), en donde las tareas representan procesos específicos e independientes unos de otros. A pesar de que los RTOS suelen utilizar hardware de los microcontroladores para operar correctamente, estos se ubican en la capa Middleware, ya que sus características no pertenecen directamente al manejo y configuración  de periféricos ni tampoco a las capas de aplicación.
+
+## Concurrencia
+Debido a que los sistemas embebidos suelen trabajar con un único procesador, esto hace inviable el uso de diferentes núcleos para la realización de múltiples tareas al mismo tiempo (paralelismo). En consecuencia, la concurrencia se vuelve una herramienta más viable. De este modo, la concurrencia se define como la capacidad de un sistema para que múltiples tareas progresen conforme avanza el tiempo, pero esto no significa que se ejecuten en paralelo, sino que usan cambios de contexto de tareas, los cuales contienen información relevante cómo: estado actual en que se encuentra la tarea (nueva, bloqueada, lista, en espera o en ejecución), límites externos en memoria, su prioridad, nombre y posición actual de la instrucción en la cual se encuentra el procesador actualmente. Todo este conjunto de información del estado de la tarea se le conoce como task control block (TCB). 
+## Tick y quantum
+Un RTOS también usa conceptos como el tick y el quantum, en donde el tick es una unidad de tiempo base que el planificador utiliza para sincronizarse. Suele utilizar hardware propio del microcontrolador, como los temporizadores, los cuales son configurados con interrupciones periódicas en el orden de 1 a 100 milisegundos. Por otro lado, el quantum es la unidad de tiempo utilizada para indicarle al planificador que debe realizar un cambio de contexto de tarea, guardando el TCB de la tarea actual y cargando el TCB de la siguiente tarea. Asimismo, el quantum puede ser igual o un múltiplo del tick. 
+## Planificador
+El planificador de un RTOS se encarga de administrar el orden en que se ejecutan las tareas con base a los quantum, los estados y prioridades de cada tarea. De este modo, existen dos estrategias bajo las cuales puede operar un planificador de RTOS: el modo cooperativo y modo preventivo. En el modo cooperativo, la tarea actual toma control total del procesador hasta que termine su ejecución o decida ceder el procesador para que otra tarea se ejecute, mientras que en el modo preventivo, el planificador puede interrumpir la ejecución de una tarea para ejecutar otra de mayor prioridad. Asimismo, existen otras formas de clasificación con base en su criterio de selección:
+* Round robin: Misma prioridad y asigna quantum a todas las tareas.
+* First come first served (FCFS): La primera tarea en llegar se ejecuta primero.
+* Rate monotonic: Las tareas se ejecutan con mayor prioridad conforme menor su periodo de tiempo.
+* Shortest job first: La tarea más pequeña se ejecuta primero.
+* Earliest deadline first: La tarea que se acerca a su deadline se ejecuta primero.
+## Clasificación de tipos de tiempo real
+Existen tres tipos de tiempo real que dan mayor o menor prioridad a los deadline y la tolerancia a los retrasos que pueden presentarse:
+* Soft real-time: no cumplir con el deadline no provoca consecuencias críticas, por lo cual el sistema puede continuar su correcto funcionamiento.
+* Firm real-time: pueden tolerar sobrepasos ocasionales del deadline, pero exigen que siempre se cumpla con respuestas a tiempo, aunque no haya consecuencias significativas en el sistema.
+* Hard real-time: exige respuestas antes del deadline, debido a que una respuesta tardía provoca consecuencias severas.
