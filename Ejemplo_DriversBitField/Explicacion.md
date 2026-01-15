@@ -218,15 +218,16 @@ Gracias a la unión, ahora tenemos dos modos de acceder a nuestro registro: de l
 ```
 
 ### Advertencias
-* ***ADVERTENCIA 1:*** El acceso por bit-field puede ser más lento y generar más instrucciones de las necesarias, a diferencia de realizar la escritura mediante operaciones *bitwise* (máscaras y desplazamientos). Esto se debe a que el compilador suele generar una secuencia de lectura, modificación y escritura del dato completo (Read-Modify-Write), aun cuando solo se desea modificar uno o pocos bits.
 
-Recomendación: Para mejorar el desempeño y el control sobre el código generado, se recomienda el uso de operaciones bitwise explícitas, especialmente en registros de hardware o en secciones críticas del sistema.
+***ADVERTENCIA 1:*** El acceso por bit-field puede ser más lento y generar más instrucciones de las necesarias, a diferencia de realizar la escritura mediante operaciones *bitwise* (máscaras y desplazamientos). Esto se debe a que el compilador suele generar una secuencia de lectura, modificación y escritura del dato completo (Read-Modify-Write), aun cuando solo se desea modificar uno o pocos bits.
 
-* ***ADVERTENCIA 2:*** El uso de estructuras con bit-field depende del compilador, de la arquitectura del procesador y de la forma en que el compilador decide organizar los bits dentro de la estructura. El *endianess* define el orden en el que se almacenan los bytes en memoria para datos de más de un byte, pero no garantiza el orden de los bits dentro de un bit-field. Por esta razón, no siempre se puede asumir que la primera variable declarada dentro de una estructura con bit-field comenzará en el bit menos significativo.
+* Recomendación: Para mejorar el desempeño y el control sobre el código generado, se recomienda el uso de operaciones bitwise explícitas, especialmente en registros de hardware o en secciones críticas del sistema.
 
-Recomendación: Se recomienda evitar el uso de bit-fields para mapear registros de hardware o estructuras que dependan de una disposición exacta de los bits, ya que su comportamiento puede variar entre compiladores y plataformas.
+***ADVERTENCIA 2:*** El uso de estructuras con bit-field depende del compilador, de la arquitectura del procesador y de la forma en que el compilador decide organizar los bits dentro de la estructura. El *endianess* define el orden en el que se almacenan los bytes en memoria para datos de más de un byte, pero no garantiza el orden de los bits dentro de un bit-field. Por esta razón, no siempre se puede asumir que la primera variable declarada dentro de una estructura con bit-field comenzará en el bit menos significativo.
 
-* ***ADVERTENCIA 3:*** Se debe tener en consideración el ***acceso atómico*** a bits. Para ejemplificar este caso, se debe retomar la idea de una linea de código en C: `GPIO_DATA->AccesoBitField.bits_Led = 2`;
+* Recomendación: Se recomienda evitar el uso de bit-fields para mapear registros de hardware o estructuras que dependan de una disposición exacta de los bits, ya que su comportamiento puede variar entre compiladores y plataformas.
+
+***ADVERTENCIA 3:*** Se debe tener en consideración el ***acceso atómico*** a bits. Para ejemplificar este caso, se debe retomar la idea de una linea de código en C: `GPIO_DATA->AccesoBitField.bits_Led = 2`;
 
 A nivel de instrucciones del procesador, esta operación suele implicar:
 * (I) acceder a la dirección del registro GPIO_DATA,
@@ -235,3 +236,9 @@ A nivel de instrucciones del procesador, esta operación suele implicar:
 * (IV) escribir la palabra completa modificada en el registro.
 
 El acceso atómico implica que toda esta secuencia de instrucciones no debe ser interrumpida. El problema surge cuando existen interrupciones o se utiliza un Sistema Operativo en Tiempo Real (RTOS), ya que estos pueden interrumpir el flujo normal del programa. Si la ejecución se interrumpe entre los pasos (II) y (IV) y otra ISR o tarea modifica el mismo registro, al retomarse la ejecución se realizará la escritura del registro con información desactualizada, generando un error difícil de detectar y depurar.
+
+* Recomendación: Para evitar problemas relacionados con accesos no atómicos, se recomienda proteger las operaciones de lectura y escritura sobre registros compartidos mediante mecanismos de exclusión, como secciones críticas o deshabilitación temporal de interrupciones, así como diseñar la lógica del programa de manera que un mismo registro no sea modificado simultáneamente desde múltiples contextos de ejecución. A continuación se enlistan las opciones que se pueden aplicar.
+  * Deshabilitar interrupción durante modificación del registro deseado (Bare-Metal).
+  * Usar semáforo Mutex para proteger el acceso a registros compartidos, considerando que no son utilizables en una ISR.
+  * Uso de registros que permitan escritura y lectura por separado (depende del microcontrolador), por ejemplo un registro orientado específicamente a la transmisión y otro a la recepción de datos por parte de un periférico I2C.
+  * Implementar el principio de [Separación de responsabilidades](https://www.geeksforgeeks.org/software-engineering/separation-of-concerns-soc/#application-of-soc)
