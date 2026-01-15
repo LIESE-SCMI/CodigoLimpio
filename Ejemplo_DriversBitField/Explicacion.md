@@ -241,4 +241,4 @@ El acceso atómico implica que toda esta secuencia de instrucciones no debe ser 
   * Deshabilitar interrupción durante modificación del registro deseado (Bare-Metal).
   * Usar semáforo Mutex para proteger el acceso a registros compartidos, considerando que no son utilizables en una ISR.
   * Uso de registros que permitan escritura y lectura por separado (depende del microcontrolador), por ejemplo un registro orientado específicamente a la transmisión y otro a la recepción de datos por parte de un periférico I2C.
-  * Implementar el principio de [Separación de responsabilidades](https://www.geeksforgeeks.org/software-engineering/separation-of-concerns-soc/#application-of-soc)
+  * Implementar el principio de [Separación de responsabilidades](https://www.geeksforgeeks.org/software-engineering/separation-of-concerns-soc/#application-of-soc).
