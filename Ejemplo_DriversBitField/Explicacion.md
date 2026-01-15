@@ -217,11 +217,21 @@ Gracias a la unión, ahora tenemos dos modos de acceder a nuestro registro: de l
   }
 ```
 
-### Consideraciones importantes
-* El acceso por ***bitwise*** implica un código que utiliza las instrucciones del procesador de manera explícita (AND, OR, corrimiento de bits), por lo cual es más sencillo y optimizado.
-* El acceso por ***bit-field*** puede incluir más instrucciones de las necesarias, cómo puede ser: **(I)** Acceder al registro, **(II)** leer todo el registro, **(III)**realizar una máscara sobre el campo de bits a usar y **(IV)** entregar esa información al usuario o realizar más instrucciones. Es por ello que muchas veces es mejor acceder de forma completa al registro, ya que puedes reducir instrucciones.
-
 ### Advertencias
-* ***ADVERTENCIA 1:*** El acceso por *bit-field* puede ser más lento y generar más instrucciones de las necesarias, a diferencia de hacer la escritua por *bitwise*.
-* ***ADVERTENCIA 2:*** Depende del ***compilador***, la ***arquitectura del procesador*** y el ***endianess*** (el orden de la información al guardar datos de más de un byte de longitud en memoria, así como el endianess se aplica a información con más de un byte de información). No siempre se puede asumir que un compilador vaya a definir la primer variable dentro de la estructura con bit-field empezando por el bit menos signifcativo.
-* ***ADVERTENCIA 3:*** Se debe tener en consideración el ***acceso atómico*** a bits. Para ejemplificar este caso, se debe retomar la idea de una linea de código en C: `GPIO_DATA->AccesoBitField.bits_Led = 2`; pero en instrucciones del procesador se puede ver cómo: **(I)** acceder a la dirección del registro GPIO_DATA, **(II)** leer la palabra completa de 32 bits, **(III)** modificar los bits, aplicando una máscara en el campo correspondiente, **(IV)** escribir en el registro la palabra completa modificada. El acceso atómico significa que toda esa secuencia de instrucciones a nivel de procesador no puede ser interrumpida. El problema radica en las **interrupciones** y el uso de un **Sistemas Operativos en Tiempo Real** (RTOS, por sus siglas en inglés). Ambos interrumpen al programa para ejecutar otra secuencia de código, de modo que si se interrumpe el paso **(III)** y en una ISR o tarea distinta se modifica el dato que se iba a escribir en el registro (se modifica a través de variables globales, variables compartidas y mal manejo de la lógica interna del código), cuando se retorne a la instrucción **(III)**, ya no se escribirá el dato que inicialmente se quería utilizar (hay un error que será muy díficil de encontrar).
+* ***ADVERTENCIA 1:*** El acceso por bit-field puede ser más lento y generar más instrucciones de las necesarias, a diferencia de realizar la escritura mediante operaciones *bitwise* (máscaras y desplazamientos). Esto se debe a que el compilador suele generar una secuencia de lectura, modificación y escritura del dato completo (Read-Modify-Write), aun cuando solo se desea modificar uno o pocos bits.
+
+Recomendación: Para mejorar el desempeño y el control sobre el código generado, se recomienda el uso de operaciones bitwise explícitas, especialmente en registros de hardware o en secciones críticas del sistema.
+
+* ***ADVERTENCIA 2:*** El uso de estructuras con bit-field depende del compilador, de la arquitectura del procesador y de la forma en que el compilador decide organizar los bits dentro de la estructura. El *endianess* define el orden en el que se almacenan los bytes en memoria para datos de más de un byte, pero no garantiza el orden de los bits dentro de un bit-field. Por esta razón, no siempre se puede asumir que la primera variable declarada dentro de una estructura con bit-field comenzará en el bit menos significativo.
+
+Recomendación: Se recomienda evitar el uso de bit-fields para mapear registros de hardware o estructuras que dependan de una disposición exacta de los bits, ya que su comportamiento puede variar entre compiladores y plataformas.
+
+* ***ADVERTENCIA 3:*** Se debe tener en consideración el ***acceso atómico*** a bits. Para ejemplificar este caso, se debe retomar la idea de una linea de código en C: `GPIO_DATA->AccesoBitField.bits_Led = 2`;
+
+A nivel de instrucciones del procesador, esta operación suele implicar:
+* (I) acceder a la dirección del registro GPIO_DATA,
+* (II) leer la palabra completa de 32 bits,
+* (III) modificar los bits aplicando una máscara en el campo correspondiente,
+* (IV) escribir la palabra completa modificada en el registro.
+
+El acceso atómico implica que toda esta secuencia de instrucciones no debe ser interrumpida. El problema surge cuando existen interrupciones o se utiliza un Sistema Operativo en Tiempo Real (RTOS), ya que estos pueden interrumpir el flujo normal del programa. Si la ejecución se interrumpe entre los pasos (II) y (IV) y otra ISR o tarea modifica el mismo registro, al retomarse la ejecución se realizará la escritura del registro con información desactualizada, generando un error difícil de detectar y depurar.
