@@ -217,7 +217,7 @@ Gracias a la unión, ahora tenemos dos modos de acceder a nuestro registro: de l
   }
 ```
 
-### Advertencias
+## Advertencias
 
 ***ADVERTENCIA 1:*** El acceso por bit-field puede ser más lento y generar más instrucciones de las necesarias, a diferencia de realizar la escritura mediante operaciones *bitwise* (máscaras y desplazamientos). Esto se debe a que el compilador suele generar una secuencia de lectura, modificación y escritura del dato completo (Read-Modify-Write), aun cuando solo se desea modificar uno o pocos bits.
 
