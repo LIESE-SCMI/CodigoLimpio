@@ -6,7 +6,7 @@ Para explicar ésto, vamos a suponer que tenemos los siguientes archivos:
 
 * Un archivo de cabecera ***Reg_32.h*** de la capa de drivers, en donde se tiene el acceso a registros a través de las funciones definidas con Reg32.
 
-* Archivos de la capa de Drivers, en donde se tienen las estructuras de acceso a registros y de configuración de los periféricos(con o sin el uso de bit-field), ádemas de las enumeraciones para reemplazar números mágicos. Cómo ejemplos se pueden definir archivos para: ***GPIO.h***, ***NVIC.h***, ***SPI.h*** y ***USART.h***.
+* Archivos de la capa de Drivers, en donde se tienen las estructuras de acceso a registros y de configuración de los periféricos(con o sin el uso de bit-field), además de las enumeraciones para reemplazar números mágicos. Cómo ejemplos se pueden definir archivos para: ***GPIO.h***, ***NVIC.h***, ***SPI.h*** y ***USART.h***.
 
 * Archivos de la capa HAL, con los nombres: ***GPIO_HAL.h***, ***NVIC_HAL.h***, ***SPI_HAL.h*** y ***USART_HAL.h***, los cuales contienen enumeraciones, estructuras a utilizar y las llamadas a función; además de sus archivos fuente ***GPIO_HAL.c***, ***NVIC_HAL.c***, ***SPI_HAL.h*** y ***USART_HAL.c***, los cuales contienen a las funciones en sí.
 
