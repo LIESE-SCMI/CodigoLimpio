@@ -52,7 +52,7 @@ Ahora se agrega un nuevo elemento **Componente externo**, el cual va a indicar e
 ### 🧩 Planteamiento de una función en la capa de board support 
 En este apartado se muestran los requerimientos para implementar funciones en esta capa.
 
-#### 🧩 Nombre
+### 🧩 Nombre
 En esta capa, todas las funciones deben seguir la siguiente síntaxis: *NombreGeneralComponenteExterno_PerifericoPrincipal_Acción*. Por ejemplo:
 
 ```c
