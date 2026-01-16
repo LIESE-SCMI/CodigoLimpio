@@ -85,7 +85,7 @@ Por último, es importante resaltar que este comentario aplica para todas las ca
 ### 🧩 Planteamiento de una función HAL
 En este caso, depende de la aplicación que se le quiere dar.
 
-* ¿Quieres qué la función configure varios perifericos o solo uno?
+* ¿Quieres qué la función configure varios periféricos o solo uno?
 * ¿Quieres abstraer todo el acceso a los registros o quieres que pueda acceder a ellos?
 * ¿Con una sola función se configuran todos los modos de operación o se hace una función para cada modo?
 
