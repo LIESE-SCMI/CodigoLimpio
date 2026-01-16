@@ -2,7 +2,7 @@
 En esta sección se habla acerca de la rutina de servicio de interrupción (ISR).
 
 ## 🧩 ISR cómo caso especial
-Una ISR permite atender eventos especiales que ocurren en un periférico, los cuales pausan al procesador para ejecutar ciertas instrucciones con base en el evento que se ha generado. De este modo, una bandera de interrupción es la encargada de indicar que evento se ha generado. Una vez se ha entrado a la ISR, esta bandera debe ser limpiada para evitar que entremos a la ISR de forma indefinida (lo cual provocaría un error en la lógica del código).
+Una ISR permite atender eventos especiales que ocurren en un periférico, los cuales detienen al procesador para ejecutar ciertas instrucciones con base en el evento que se ha generado. De este modo, una bandera de interrupción es la encargada de indicar que evento se ha generado. Una vez se ha entrado a la ISR, esta bandera debe ser limpiada para evitar que entremos a la ISR de forma indefinida (lo cual provocaría un error en la lógica del código).
 
 De este modo, la ISR debe cumplir con ciertas condiciones (algunas de ellas ya mencionadas en otros capítulos):
 
@@ -11,13 +11,13 @@ De este modo, la ISR debe cumplir con ciertas condiciones (algunas de ellas ya m
 
 Cuando se utiliza *bare-metal*, los efectos de tener una ISR con muchas instrucciones no se notan tanto; no obstante, cuando se hace uso de un RTOS o de varías ISR que deben atenderse, tener muchas instrucciones hace inviable el uso de estas últimas. 
 
-Partiendo de esta idea, lo recomendable siempre es utilizar conceptos como **tareas diferidas**, **Colas** u otra herramienta de software que permita acortar lo más posible el código de la ISR para que una tarea (en el caso de un RTOS) o el código del main se encarguen de realizar las acciones correspondientes ante la generación de la interrupción.
+Partiendo de esta idea, lo recomendable siempre es utilizar conceptos como **tareas diferidas**, **colas** u otra herramienta de software que permita acortar lo más posible el código de la ISR para que una tarea (en el caso de un RTOS) o el código del main se encarguen de realizar las acciones correspondientes ante la generación de la interrupción.
 
 De este modo, retomando las condiciones:
 
 * Limpiar la bandera de interrupción.
 * Tener la menor cantidad posible de instrucciones.
-* hacer uso de tareas diferidas, colas u cualquier otra herramienta que permita indicarle al proceso principal o tarea que ya se debe ejecutar una cierta acción.
+* Hacer uso de tareas diferidas, colas u cualquier otra herramienta que permita indicarle al proceso principal o tarea que ya se debe ejecutar una cierta acción.
 
 ### 🧩 Ejemplo simple
 Cómo ejemplo podemos tomar el siguiente código:
