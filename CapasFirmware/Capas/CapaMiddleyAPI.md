@@ -9,7 +9,7 @@ Cómo esta capa usualmente es proporcionada por terceros, aquí pueden variar la
 * ***Tercera recomendación:*** realizar una buena gestión de la memoria, debido a que un mal gestión puede ocasionar desbordamientos y errores.
 
 ## 🧩 Consideraciones y recomendaciones para funciones API
-En el caso de una función API, depende más de las necesidades de cada aplicación y del programdor, por lo cual no se puede definir un estándar a seguir del todo. Sin embargo si se pueden definir ciertas condiciones generales:
+En el caso de una función API, depende más de las necesidades de cada aplicación y del programador, por lo cual no se puede definir un estándar a seguir del todo. Sin embargo si se pueden definir ciertas condiciones generales:
 
 * En esta capa solo se deberían observar funciones de las capas inferiores: middleware, board support y algunas HAL, si llega a ser el caso; la capa de drivers *NO* debe verse.
 
