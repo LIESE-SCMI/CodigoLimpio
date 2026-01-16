@@ -16,7 +16,7 @@ Retomando la información anteriormente mencionada, el método se va a ajustar d
     * **Comandos.** Cambian y/o modifican el estado interno de un objeto(en nuestro caso, algún periférico, componente electrónico, etc). 
     * **Consultas.** Devuelven o retornan un valor (en nuestro caso, consultar el valor interno de un registro).
 * **Pre-condiciones.** Condiciones que se deben cumplir **ANTES** de llamar a la función (Ejemplo: función de configuración de un GPIO, solo si ya se utilizó la función que da reloj al mismo; archivos que se deben agregar para utilizar la función).
-* **Post-condiciones.** Condiciones que se van a cumplir **DÉSPUES** de ejecutar la función (definir archivos que se pueden usar ahora, obtener una configuración específica para mi periférico, con ciertas carácteristicas; tipo de retorno de información...).
+* **Post-condiciones.** Condiciones que se van a cumplir **DESPUÉS** de ejecutar la función (definir archivos que se pueden usar ahora, obtener una configuración específica para mi periférico, con ciertas características; tipo de retorno de información...).
 * **Invariantes.** Condiciones internas de la función, para que esta pueda operar correctamente (Si dentro de los parámetros, uno es de tipo entero y sin signo, se debe especificar que ese parámetro no acepta datos menores a cero).
 
 ## 💾 Creación de una función HAL
