@@ -2,7 +2,7 @@
 En esta sección se presenta la forma de seleccionar el idioma.
 
 ## ⚙️ Selección de lenguaje
-La selección de lengauje es de suma importancia, debido a que ayuda a facilitar y entender el código (comentarios, funciones y sintaxis general), así como la documentación.
+La selección de lenguaje es de suma importancia, debido a que ayuda a facilitar y entender el código (comentarios, funciones y sintaxis generales), así como la documentación.
 
 De este modo, a continuación se presenta una clasificación general de proyectos:
 
@@ -12,7 +12,7 @@ De este modo, a continuación se presenta una clasificación general de proyecto
 
 Considerando esto, para evitar problemas, se recomienda a todos los integrantes escribir los códigos en **inglés**, por tres razones:
 
-* La mayoría de firmware, librearías y software de terceros están escritas en este idioma.
+* La mayoría de firmware, librerías y software de terceros están escritas en este idioma.
 * Es un idioma muy generalizado en nuestro continente; por lo cual, muchas personas lo hablan o lo pueden entender de una manera más intuitiva.
 
 Esto puede aplicarse para casi cualquier proyecto, sin embargo, es importante resaltar que el lenguaje de escritura de firmware puede cambiar, si los requisitos del proyecto así lo indican, por lo cual es importante que este punto siempre se tome en cuenta.
