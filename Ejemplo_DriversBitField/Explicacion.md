@@ -1,4 +1,6 @@
 # Bit-Field, uniones y estructuras: Explicación
+En el lenguaje de programación C existen dos conceptos que se pueden utilizar para el acceso a registros: uniones y campos de bits. Con esto en mente, a continuación se presenta el contenido y la explicación del ejemplo de uso con campos de bits o bit-field (por su traducción al inglés).
+
 ## Recordatorio de estructuras
 
 Una estructura es una zona de memoria continua que puede reservar variables de diferentes tipos de datos, como se muestra a continuación:
