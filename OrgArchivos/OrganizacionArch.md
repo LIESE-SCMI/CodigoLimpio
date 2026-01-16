@@ -16,13 +16,13 @@ De este modo, los archivos se pueden llamar y ver de la siguiente manera:
 
 En este caso, las funciones HAL para GPIO y la máquina de interrupciones NVIC (si es que se cuenta con una máquina específica aparte), son básicas para permitir la comunicación externa entre los periféricos como USART, SPI e I2C (por dar unos ejemplos); así como de permitir el uso de banderas de interrupción y utilizar sus ISR. Es por ello que se agregan a los periféricos USART y SPI de los ejemplos.
 
-A partir de aquí, la capa de board support debe seguir una línealidad cómo se muestra a continuación:
+A partir de aquí, la capa de board support debe seguir una linealidad cómo se muestra a continuación:
 
 ![Diagrama de organización de archivos (Board Support)](./Imagenes/OrganizacionArchivos_BS.png)
 
-No haría sentido tener archivos de periféricos I2C, CAN o ethernet para el manejo de un Módulo bluetooth HC-05, por dar un ejemplo. Si no se ocupa, no se debe agregar, ya que podría ocasionar errores si se llegarán a utilizar funciones que no se necesitan. Esto va de la mano con el concepto de herencia, en donde cada archivo, ahora visto como un objeto, hereda atributos al ser incluido en otro archivo. La inclusión de este concepto permite a otros integrantes diferenciar cada capa y utilizar solo los archivos necesarios. 
+No haría sentido tener archivos de periféricos I2C, CAN o ethernet para el manejo de un módulo bluetooth HC-05, por dar un ejemplo. Si no se ocupa, no se debe agregar, ya que podría ocasionar errores si se llegarán a utilizar funciones que no se necesitan. Esto va de la mano con el concepto de herencia, en donde cada archivo, ahora visto como un objeto, hereda atributos al ser incluido en otro archivo. La inclusión de este concepto permite a otros integrantes diferenciar cada capa y utilizar solo los archivos necesarios. 
 
-Continuando con el ejemplo, a partir de la capa de board support realmente se podrán observar que las capas pueden llegar a revolverse un poco, debido a la prescencia de los archivos de un RTOS y otros tantos que se lleguen a necesitar. Al final se podría ver algo como:
+Continuando con el ejemplo, a partir de la capa de board support realmente se podrá observar que las capas pueden llegar a revolverse un poco, debido a la prescencia de los archivos de un RTOS y otros tantos que se lleguen a necesitar. Al final se podría ver algo como:
 
 ![Diagrama de organización de archivos (Módulos)](./Imagenes/OrganizacionArchivos_Modulos.png)
 
