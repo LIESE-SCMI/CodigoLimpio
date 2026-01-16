@@ -1,4 +1,4 @@
-# 🔍 Lenguaje para firmware
+# 🔍 Lenguaje de escritura para firmware
 En esta sección se presenta la forma de seleccionar el idioma.
 
 ## ⚙️ Selección de lenguaje
