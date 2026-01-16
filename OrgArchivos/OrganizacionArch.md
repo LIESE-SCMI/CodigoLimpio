@@ -2,7 +2,7 @@
 A partir de las capas de firmware se puede abordar la organización de los archivos, en donde se pueden ordenar varios archivos por capas, así como utilizar conceptos de POO (herencia y atributos de objetos), los cuales le dan otro significado a los archivos, más allá de contener funciones. De este modo, un archivo se puede visualizar como una clase, a partir de la cual solo la inclusión de esta en otro archivo le permite heredar los atributos y métodos de la misma (variables y punteros globales, enumeraciones, estructuras y funciones), además de servir como indicativo de que solo ese archivo heredado puede ser ocupado en el nuevo archivo. Esto permite que la división de capas se haga con más facilidad.
 
 ## 🗂️ ¿Cómo organizar los archivos?
-Para explicar estó, vamos a suponer que tenemos los siguientes archivos:
+Para explicar ésto, vamos a suponer que tenemos los siguientes archivos:
 
 * Un archivo de cabecera ***Reg_32.h*** de la capa de drivers, en donde se tiene el acceso a registros a través de las funciones definidas con Reg32.
 
